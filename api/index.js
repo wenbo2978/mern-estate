@@ -17,11 +17,21 @@ mongoose.connect(process.env.MONGO_URL).then(()=>{
   console.log('err: ' + err);
 });
 
+app.listen(3000, () => {
+  console.log('Server is running on port 3000!!!');
+});
+
 
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 
-
-app.listen(3000, () => {
-  console.log('Server is running on port 3000!!!');
+//Error-Handling Middleware
+app.use((err, req, res, next) => {
+  const statusCode = err.statusCode || 500;
+  const message = err.message || 'Internal Server Error';
+  return res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message
+  });
 });
