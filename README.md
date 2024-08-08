@@ -5,3 +5,7 @@
 # create encrption
 
 `npm i bcryptjs`
+
+# install jwt
+
+`npm i jsonwebtoken`
