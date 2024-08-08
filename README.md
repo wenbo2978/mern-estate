@@ -10,6 +10,10 @@
 
 `npm i jsonwebtoken`
 
-# use redux and toolkit
+# use redux toolkit
 
 [link](https://redux-toolkit.js.org/)
+
+# use redux persist
+
+`npm install redux-persist`
