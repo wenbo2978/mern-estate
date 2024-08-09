@@ -4,11 +4,16 @@ import cors from 'cors';
 import userRouter from './routes/user-route.js';
 import authRouter from './routes/auth-route.js';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 dotenv.config();
 
 const app = express();
 //console.log("Mongo:"+process.env.MONGO_URL);
 app.use(express.json());
+
+
+//get info from cookie
+app.use(cookieParser());
 
 
 mongoose.connect(process.env.MONGO_URL).then(()=>{
