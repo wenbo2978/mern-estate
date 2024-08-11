@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useRef } from 'react';
-import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage'
+import {getDownloadURL, getStorage, list, ref, uploadBytesResumable} from 'firebase/storage'
 import { app } from '../firebase';
 import {
   updateUserStart,
@@ -26,10 +26,8 @@ const Profile = () => {
   const [formData, setFormData] = useState({});
   const dispatch = useDispatch();
   const[updateSuccess, setUpdateSuccess] = useState(false);
-  //console.log(formData);
-  //console.log(filePrec);
-  //console.log(fileUploadError);
-  //console.log('User is authenticated:', getAuth().currentUser != null);
+  const [showListingsError, setShowListingsError] = useState(false);
+  const [listings, setListings] = useState([]);
 
   useEffect(()=>{
     if(file){
@@ -123,6 +121,20 @@ const Profile = () => {
       dispatch(signOutUserFailure(err.message));
     }
   }
+  const handleShowListings = async ()=>{
+    try{
+      setShowListingsError(false);
+      const res = await fetch(`/api/user/listings/${currentUser._id}`);
+      const data = await res.json();
+      if(data.success === false){
+        setShowListingsError(true);
+        return;
+      }
+      setListings(data);
+    }catch(err){
+      setShowListingsError(true);
+    }
+  }
   return (
     <div className='p-3 max-w-lg mx-auto'>
       <h1 className='text-3xl font-semibold text-center m-7'>Profile</h1>
@@ -204,6 +216,41 @@ const Profile = () => {
           updateSuccess ? 'User update successfully!' : ''
         }
       </p>
+      <button onClick={handleShowListings} className='text-green-700 w-full'>Show Listings</button>
+      <p className='text-red-700 mt-5'>
+        {
+          showListingsError ? 'Error show listings' : ''
+        }
+      </p>
+      {
+        listings.length > 0 && 
+        <div className='flex flex-col gap-4'>
+          <h1 className='text-center my-7 text-2xl font-semibold'>Your Listings</h1>
+          {
+            listings.map((listing, index) => (
+              <div 
+                className='border rounded-lg p-3 flex justify-between items-center gap-4' 
+                key={index}>
+                <Link to={`/listing/${listing._id}`}>
+                  <img 
+                    src={listing.imageUrls[0]} 
+                    alt='listing cover' 
+                    className='h-24 w-24 object-contain rounded-lg'/>
+                </Link>
+                <Link 
+                  className='flex-1 text-slate-700 font-semibold hover:underline truncate text-center' 
+                  to={`/listing/${listing._id}`}>
+                  <p>{listing.name}</p>
+                </Link>
+                <div className='flex flex-col items-center'>
+                  <button className='text-red-700 uppercase'>Delete</button>
+                  <button className='text-green-700 uppercase'>Edit</button>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      }
     </div>
   )
 }
