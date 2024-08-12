@@ -10,3 +10,7 @@ Currently, two official plugins are available:
 # install icon
 
 `npm i react-icons`
+
+# install swiper
+
+`npm i swiper`
