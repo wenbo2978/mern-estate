@@ -5,9 +5,12 @@ import SwiperCore from 'swiper';
 import {Navigation} from 'swiper/modules';
 import 'swiper/css/bundle';
 import {FaBath, FaBed, FaChair, FaParking} from 'react-icons/fa'
-
+import { useSelector } from 'react-redux';
+import Contact from '../components/Contact';
 
 const Listing = () => {
+  const [contact, setContact] = useState(false);
+  const {currentUser} = useSelector(state => state.user);
   SwiperCore.use(Navigation);
   const params = useParams();
   const [listingData, setListingData] = useState({});
@@ -122,6 +125,12 @@ const Listing = () => {
                 {listingData.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
+            {currentUser && currentUser._id !== listingData.userRef && !contact && 
+              <button onClick={() => setContact(true)} className='bg-slate-700 text-white rounded-lg hover:opacity-95 p-3 uppercase'>Contact landlord</button>
+            }
+            {
+              contact && <Contact listing={listingData}/>
+            }
           </div>
         </div>
         
