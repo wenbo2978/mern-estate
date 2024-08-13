@@ -16,10 +16,10 @@ const Headers = () => {
   }
   useEffect(()=>{
     const urlParams = new URLSearchParams(location.search);
-    const searchTermFromUrl = urlParams.get('searchTerm');
-    if(searchTermFromUrl){
-      setSearchTerm(searchTermFromUrl);
-    }
+    const searchTermFromUrl = urlParams.get('searchTerm') || '';
+    //if(searchTermFromUrl){
+    setSearchTerm(searchTermFromUrl);
+    //}
   }, [location.search]);
   return (
     <div className='bg-slate-200 shadow-md'>

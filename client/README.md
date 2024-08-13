@@ -14,3 +14,7 @@ Currently, two official plugins are available:
 # install swiper
 
 `npm i swiper`
+
+# install plug in : two lines
+
+[link](https://github.com/tailwindlabs/tailwindcss-line-clamp)
