@@ -11,6 +11,7 @@ import CreateListing from './pages/CreateListing'
 import UpdateListing from './pages/UpdateListing'
 import Listing from './pages/Listing'
 import Search from './pages/Search'
+import Message from './pages/Message'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route path='/profile' element={<Profile/>}/>
           <Route path='/create-listing' element={<CreateListing/>}/>
           <Route path='/update-listing/:id' element={<UpdateListing/>}/>
+          <Route path='/message' element={<Message/>}/>
         </Route>
         
         <Route path='/about' element={<About/>}/>
