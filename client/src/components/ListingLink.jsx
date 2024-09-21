@@ -16,7 +16,7 @@ const ListingLink = ({id}) => {
   }, [])
   return (
     <Link to={`/listing/${id}`}>
-      <div className='bg-white p-2 flex flex-col items-center rounded-md m-1'>
+      <div className='bg-white p-2 flex flex-col items-start rounded-md m-1'>
         <img src={imgUrl} className='w-48 h-48 rounded-md'/>
         <p>{listName}</p>
       </div>

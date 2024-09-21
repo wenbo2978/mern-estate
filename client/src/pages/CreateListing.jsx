@@ -3,6 +3,7 @@ import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/st
 import { app } from '../firebase';
 import {useSelector} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
+import { generateNotification } from '../utils/notificationUtils';
 
 const CreateListing = () => {
   const navigate = useNavigate();
@@ -127,6 +128,7 @@ const CreateListing = () => {
       if(data.success === false){
         setError(data.message);
       }else{
+        await generateNotification(currentUser._id, data._id, 'post the new house');
         navigate(`/listing/${data._id}`);
       }
     }catch(err){

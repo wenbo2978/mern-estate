@@ -3,6 +3,7 @@ import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/st
 import { app } from '../firebase';
 import {useSelector} from 'react-redux'
 import {useNavigate, useParams} from 'react-router-dom'
+import { generateNotification } from '../utils/notificationUtils';
 
 const UpdateListing = () => {
 
@@ -143,6 +144,7 @@ const UpdateListing = () => {
       if(data.success === false){
         setError(data.message);
       }else{
+        await generateNotification(currentUser._id, data._id, 'update the some information of the house');
         navigate(`/listing/${data._id}`);
       }
     }catch(err){
@@ -151,6 +153,7 @@ const UpdateListing = () => {
     }
 
   }
+
 
   return (
     <main className='p-3 max-w-4xl mx-auto'>
