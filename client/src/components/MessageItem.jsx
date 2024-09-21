@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { getMessageById } from '../utils/messageUtils';
 import { getUserById } from '../utils/userUtils';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import ListingLink from './ListingLink';
 
 export default function MessageItem({messageId, currrentUserId}) {
   const [message, setMessage] = useState('');
   const [recUser, setRecUser] = useState('');
   const {currentUser} = useSelector(state => state.user);
   useEffect(() => {
-    //console.log(currentUser)
-    //console.log(111);
     const getMessage = async () => {
       const data = await getMessageById(messageId);
       setMessage(data);
@@ -31,14 +31,29 @@ export default function MessageItem({messageId, currrentUserId}) {
           src={recUser.avatar}
           className='w-10 h-10 rounded-full'
         />
-        <p className='bg-blue-400 p-2 rounded-md'>{message.content}</p>      
+        <div className='bg-blue-400 p-2 rounded-md'>
+          <p className='bg-blue-400 rounded-md'>{message.content}</p>
+          {
+            message.listingRef && 
+            <ListingLink id={message.listingRef}/>
+          }
+        </div>
+        
+        
       </div> : 
       <div className='flex flex-row gap-2 justify-end'>
-        <p className='bg-blue-400 p-2 rounded-md'>{message.content}</p>
+        <div className='bg-blue-400 p-2 rounded-md'>
+          <p className='bg-blue-400 rounded-md'>{message.content}</p>
+          {
+            message.listingRef && 
+            <ListingLink id={message.listingRef}/>
+          }
+        </div>
+        
         <img 
           src={currentUser.avatar}
           className='w-10 h-10 rounded-full'
-        />      
+        />
       </div>
     }
       
